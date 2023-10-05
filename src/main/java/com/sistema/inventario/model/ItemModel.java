@@ -21,6 +21,10 @@ public class ItemModel {
             private String status;
             private BigDecimal price;
 
+            @ManyToOne
+            @JoinColumn(name= "idCategoryModel",referencedColumnName = "id")
+            private CategoryModel categoryModel;
+
 
 
 
