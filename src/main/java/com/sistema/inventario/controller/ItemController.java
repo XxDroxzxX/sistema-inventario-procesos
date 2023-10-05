@@ -6,7 +6,7 @@ import com.sistema.inventario.service.ItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
+//metodos
 @RestController
 public class ItemController {
     @Autowired

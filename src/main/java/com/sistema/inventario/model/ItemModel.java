@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name="item")
 @Data
+//metodos
 public class ItemModel {
     @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
