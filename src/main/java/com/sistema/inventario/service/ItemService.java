@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 //metodos
 @Service
 public class ItemService {
@@ -20,19 +22,22 @@ public class ItemService {
     public ItemModel getItemModelById (Long id){
         return itemRepository.findById(id).get();
     }
-    public ItemModel updateItemModel (ItemModel item,Long id){
-        if(itemRepository.existsById(id)){
-            ItemModel itemBd = itemRepository.findById(id).get();
-            itemBd.setName(itemBd.getName());
-            itemBd.setDescription(itemBd.getDescription());
-            itemBd.setQuantity(itemBd.getQuantity());
-            itemBd.setPrice(itemBd.getPrice());
-            itemBd.setProvider(itemBd.getProvider());
-            itemBd.setStatus(itemBd.getStatus());
-            return itemRepository.save(itemBd);
+    public ItemModel updateItemModel(ItemModel item, Long id) {
+        Optional<ItemModel> existingItem = itemRepository.findById(id);
+        if (existingItem.isPresent()) {
+            ItemModel updatedItem = existingItem.get();
+            updatedItem.setNombre(item.getNombre());
+            updatedItem.setDescripcion(item.getDescripcion());
+            updatedItem.setCantidad(item.getCantidad());
+            updatedItem.setPrecio(item.getPrecio());
+            updatedItem.setProveedor(item.getProveedor());
+            updatedItem.setEstado(item.getEstado());
+            return itemRepository.save(updatedItem);
+        } else {
+            return null;
         }
-        return null;
     }
+
     public Boolean deleteItemById(Long id){
         if(itemRepository.existsById(id)){
             itemRepository.deleteById(id);

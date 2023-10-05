@@ -14,12 +14,12 @@ public class ItemModel {
     @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
             private Long id;
-            private String name;
-            private String description;
-            private int quantity;
-            private String provider;
-            private String status;
-            private BigDecimal price;
+            private String nombre;
+            private String descripcion;
+            private int cantidad;
+            private String proveedor;
+            private String estado; //vendido o no vendido
+            private BigDecimal precio; //moneda colombiana
 
             @ManyToOne
             @JoinColumn(name= "idCategoryModel",referencedColumnName = "id")
