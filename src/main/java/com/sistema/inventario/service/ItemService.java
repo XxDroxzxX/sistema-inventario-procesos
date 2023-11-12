@@ -22,6 +22,8 @@ public class ItemService {
     public ItemModel getItemModelById (Long id){
         return itemRepository.findById(id).get();
     }
+
+
     public ItemModel updateItemModel(ItemModel item, Long id) {
         Optional<ItemModel> existingItem = itemRepository.findById(id);
         if (existingItem.isPresent()) {
