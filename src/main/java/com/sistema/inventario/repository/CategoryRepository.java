@@ -1,11 +1,14 @@
 package com.sistema.inventario.repository;
 
 import com.sistema.inventario.model.CategoryModel;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 
-public interface CategoryRepository extends CrudRepository<CategoryModel,Long>{
-    //List<CategoryModel> findByNameCategoryAndid(String NameCategory,Long id);
+public interface CategoryRepository extends JpaRepository<CategoryModel,Long> {
+    Optional<CategoryModel> findByNameCategory(String nameCategory);
+
+    ;
 }

@@ -35,6 +35,7 @@ public class ItemController {
 
     @GetMapping("items")
     public ResponseEntity <List<ItemModel>> getAll(){
+
         return ResponseEntity.ok(itemService.findAllItems());
     }
 

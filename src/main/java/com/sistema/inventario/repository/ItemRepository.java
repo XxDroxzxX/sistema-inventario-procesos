@@ -1,10 +1,12 @@
 package com.sistema.inventario.repository;
 
 import com.sistema.inventario.model.ItemModel;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
+
 //interface
-public interface ItemRepository extends CrudRepository <ItemModel,Long> {
-    //List<ItemModel>
+public interface ItemRepository extends JpaRepository <ItemModel, Long> {
+    Optional<ItemModel> findByName(String name);
 }
