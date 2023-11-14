@@ -26,6 +26,13 @@ public class CustomExceptionHandler {
         response.put("Message: ", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<Object> handleAlreadyExistsException(AlreadyExistsException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("Date: ", LocalDate.now().toString());
+        response.put("Message: ", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
 
 }
 
