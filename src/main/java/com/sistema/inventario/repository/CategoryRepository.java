@@ -4,8 +4,10 @@ import com.sistema.inventario.model.CategoryModel;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface CategoryRepository extends CrudRepository<CategoryModel,Long>{
-    //List<CategoryModel> findByNameCategoryAndid(String NameCategory,Long id);
+    Optional<CategoryModel> findByNameCategory(String nameCategory);
+
 }
