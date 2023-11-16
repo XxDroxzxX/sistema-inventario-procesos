@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
+
 import java.math.BigDecimal;
 
 
@@ -11,7 +12,9 @@ import java.math.BigDecimal;
 @Table(name="item")
 @Data
 
+
 public class ItemModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,6 +1,7 @@
 package com.sistema.inventario.controller;
 import com.sistema.inventario.service.CategoryService;
 import com.sistema.inventario.model.CategoryModel;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -14,9 +15,11 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("categorys")
-    public ResponseEntity <CategoryModel> create(@RequestBody CategoryModel category){
-        return new ResponseEntity(categoryService.createCategoryModel(category), HttpStatus.CREATED);
-    }
+
+        public ResponseEntity<CategoryModel> create (@Valid @RequestBody CategoryModel category){
+            return new ResponseEntity(categoryService.createCategoryModel(category), HttpStatus.CREATED);
+        }
+
 
     @GetMapping("categorys/{id}")
     public ResponseEntity <CategoryModel> getCategoryById(@PathVariable Long id){
@@ -24,7 +27,7 @@ public class CategoryController {
     }
 
     @PutMapping("categorys/{id}")
-    public ResponseEntity <CategoryModel> updateCategory(@RequestBody CategoryModel category, @PathVariable Long id){
+    public ResponseEntity <CategoryModel> updateCategory(@Valid @RequestBody CategoryModel category, @PathVariable Long id){
         return ResponseEntity.ok(categoryService.updateCategory(category , id));
     }
 
