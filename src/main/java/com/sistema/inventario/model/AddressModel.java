@@ -6,10 +6,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-@Entity
 @Data
+@Entity
 @Table(name = "address")
 public class AddressModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,7 +30,6 @@ public class AddressModel {
     private Boolean status = Boolean.TRUE;
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")
-    private  UserModel user;
+    private UserModel user;
 
 }
-

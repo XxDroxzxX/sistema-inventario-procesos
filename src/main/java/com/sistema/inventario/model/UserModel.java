@@ -17,16 +17,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-
 @Data
 @Entity
 @Table(name = "user")
- @NoArgsConstructor
- @AllArgsConstructor
- @Builder
- public class UserModel implements UserDetails {
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
+public class UserModel implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "First name is required")
     @Size(min= 1, max = 100, message = "First name must be between 1 and 100 characters")
@@ -60,39 +60,33 @@ import java.util.List;
 
     Rol rol;
 
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-   return List.of(new SimpleGrantedAuthority((rol.name())));
-  }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority((rol.name())));
+    }
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-  @Override
-  public String getUsername() {
-   return this.email;
-  }
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<AddressModel> addressList;
 
-  @Override
-  public boolean isAccountNonExpired() {
-   return true;
-  }
-
-  @Override
-  public boolean isAccountNonLocked() {
-   return true;
-  }
-
-  @Override
-  public boolean isCredentialsNonExpired() {
-   return true;
-  }
-
- @JsonIgnore
- @OneToMany(mappedBy = "user")
- private List<AddressModel> addressList;
-
-  @Override
-  public boolean isEnabled() {
-   return true;
-  }
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
-
-

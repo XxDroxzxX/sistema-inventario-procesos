@@ -1,11 +1,8 @@
 package com.sistema.inventario.util;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-
-
 public enum ExceptionsConstants {
 
     ITEM_NOT_FOUND("Item not found"),
@@ -27,4 +24,3 @@ public enum ExceptionsConstants {
     }
 
 }
-

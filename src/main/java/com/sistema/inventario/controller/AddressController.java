@@ -1,5 +1,6 @@
 package com.sistema.inventario.controller;
 
+
 import com.sistema.inventario.model.AddressModel;
 import com.sistema.inventario.service.AddressService;
 import jakarta.validation.Valid;
@@ -14,7 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RestController
 public class AddressController {
+
     @Autowired
     private AddressService addressService;
 
@@ -50,4 +53,3 @@ public class AddressController {
         return errors;
     }
 }
-

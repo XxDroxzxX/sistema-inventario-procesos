@@ -1,6 +1,6 @@
 package com.sistema.inventario.service;
 
-import com.sistema.inventario.exceptions.NotFoundException;
+import com.sistema.inventario.exception.NotFoundException;
 import com.sistema.inventario.model.AddressModel;
 import com.sistema.inventario.model.UserModel;
 import com.sistema.inventario.repository.AddressRepository;
@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public class AddressService {
 
     @Autowired
     private AddressRepository addressRepository;
+
     @Autowired
     private UserService userService;
 
@@ -45,13 +45,11 @@ public class AddressService {
         return address.get();
     }
 
-    public List<AddressModel> getAllAddress(){
+    public  List<AddressModel> getAllAddress(){
         List<AddressModel> address = (List<AddressModel>) addressRepository.findAll();
         if(address.isEmpty()){
-            throw  new NotFoundException("Address not found");
+            throw  new NotFoundException("Addresses not found");
         }
         return address;
     }
 }
-
-

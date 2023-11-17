@@ -1,69 +1,70 @@
 package com.sistema.inventario.service;
 
-import com.sistema.inventario.exceptions.AlreadyExistsException;
-import com.sistema.inventario.exceptions.NotFoundException;
+import com.sistema.inventario.exception.AlreadyExistsException;
+import com.sistema.inventario.exception.NotFoundException;
+import com.sistema.inventario.model.CategoryModel;
 import com.sistema.inventario.repository.CategoryRepository;
-import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.sistema.inventario.model.CategoryModel;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryService {
+public class CategoryService{
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepositories;
 
-    public CategoryModel createCategoryModel(CategoryModel category){
-        if (categoryRepository.findByNameCategory(category.getNameCategory()).isPresent()){
-            throw new AlreadyExistsException("Category with name "+ category.getNameCategory()+ "already exists");
+    public CategoryModel createItem(CategoryModel category){
+        if (categoryRepositories.findByNameCategory(category.getNameCategory()).isPresent()) {
+            throw new AlreadyExistsException("Category with name " + category.getNameCategory() + " already exists");
         }
-        return categoryRepository.save(category);
+        return categoryRepositories.save(category);
     }
 
-    public CategoryModel getCategoryById (Long id){
-        Optional<CategoryModel> category = categoryRepository.findById(id);
-        if (category.isEmpty()){
+    public CategoryModel getItemByid(Long id){
+        Optional<CategoryModel> category = categoryRepositories.findById(id);
+        if(category.isEmpty()){
             throw new NotFoundException("Category not found");
         }
-
         return category.get();
     }
 
-    public CategoryModel updateCategory (CategoryModel category, Long id){
-        if(!categoryRepository.existsById(id)){
+    public CategoryModel updateItem(CategoryModel category, Long id){
+        if(!categoryRepositories.existsById(id)){
             throw new NotFoundException("Category not found");
         }
-        Optional<CategoryModel> existingCategoryOptional = categoryRepository.findByNameCategory(category.getNameCategory());
-
-        if (existingCategoryOptional.isPresent() && !existingCategoryOptional.get().getId().equals(id)) {
-            throw new AlreadyExistsException("Category with name "+ category.getNameCategory()+ "already exists");
+        Optional<CategoryModel> existingCategoryOptional = categoryRepositories.findByNameCategory(category.getNameCategory());
+        if (existingCategoryOptional.isPresent() && !existingCategoryOptional.get().getCategory_id().equals(id)) {
+            throw new AlreadyExistsException("Category with name " + category.getNameCategory() + " already exists");
         }
+        CategoryModel categoryDB = categoryRepositories.findById(id).get();
+        categoryDB.setNameCategory(category.getNameCategory());
+        categoryDB.setDescription(category.getDescription());
+        categoryDB.setStatus(category.getStatus());
+        categoryDB.setDisplayOrder(category.getDisplayOrder());
 
-        CategoryModel categoryBd = categoryRepository.findById(id).get();
-        categoryBd.setNameCategory(category.getNameCategory());
-        categoryBd.setType(category.getType());
-        categoryBd.setDescription(category.getDescription());
+        return categoryRepositories.save(categoryDB);
 
-
-        return categoryRepository.save(categoryBd);
     }
 
-    public Boolean deleteCategoryById(Long id){
-        if (categoryRepository.existsById(id)){
-            categoryRepository.deleteById(id);
+    public boolean deleteCategoryById(Long id){
+        if(categoryRepositories.existsById(id)){
+            categoryRepositories.deleteById(id);
             return true;
-        }else {
+        } else {
             throw new NotFoundException("Category not found");
         }
+
     }
 
-    public List<CategoryModel> findAllCategorys(){
-        List<CategoryModel> category = (List<CategoryModel>) categoryRepository.findAll();
-        if (category.isEmpty()){
-            throw new NotFoundException("Not categories found");
+    public List<CategoryModel> findAllCategory(){
+        List<CategoryModel> categories =  categoryRepositories.findAll();
+        if (categories.isEmpty()) {
+            throw new NotFoundException("No categories found");
         }
-        return category;
-    }
+        return categories;
+}
+
+
 }

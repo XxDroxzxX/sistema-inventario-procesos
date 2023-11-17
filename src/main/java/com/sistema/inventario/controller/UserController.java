@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 public class UserController {
+
     @Autowired
     private UserService userService;
+
     @PostMapping("users")
     public ResponseEntity<UserModel> create(@Valid @RequestBody UserModel user){
 
-        return new ResponseEntity(userService.createUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
     @GetMapping("users/{id}")
@@ -27,13 +30,13 @@ public class UserController {
 
     @PutMapping("users/{id}")
     public ResponseEntity<UserModel> update(@Valid @RequestBody UserModel user, @PathVariable Long id){
-        return ResponseEntity.ok(userService.updateUser(user,id));
+        return ResponseEntity.ok(userService.updateUser(id,user));
     }
 
     @DeleteMapping("users/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
-        userService.deleteUserById(id);
-        return new ResponseEntity("Se elimino el usuario",HttpStatus.NO_CONTENT);
+        userService.deleteUser(id);
+        return new ResponseEntity<String>("Se elimino el usuario", HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("users")
@@ -41,5 +44,5 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllUsers());
     }
 
-}
 
+}

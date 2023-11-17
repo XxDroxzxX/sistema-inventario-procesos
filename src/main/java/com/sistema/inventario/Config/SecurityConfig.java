@@ -1,7 +1,6 @@
-package com.sistema.inventario.settings;
+package com.sistema.inventario.Config;
 
-import com.sistema.inventario.jwtFiler.ToquenFilter;
-import jakarta.servlet.Filter;
+import com.sistema.inventario.jwt.ToquenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,16 +11,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
+public class SecurityConfig {
 
-public class SecuritySetting {
-    private final AuthenticationProvider authProvider;
-    private final  ToquenFilter toquenFilter;
-    private Filter ToquenFilter;
-
-
+    private final ToquenFilter toquenFilter;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -33,9 +29,9 @@ public class SecuritySetting {
                 ).
                 sessionManagement(sessonManager ->
                         sessonManager.
-                                sessionCreationPolicy(SessionCreationPolicy.STATELESS)).
-                authenticationProvider(authProvider)
-                .addFilterBefore(ToquenFilter, UsernamePasswordAuthenticationFilter.class)
+                        sessionCreationPolicy(SessionCreationPolicy.STATELESS)).
+                authenticationProvider(authenticationProvider).
+                addFilterBefore(toquenFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }
