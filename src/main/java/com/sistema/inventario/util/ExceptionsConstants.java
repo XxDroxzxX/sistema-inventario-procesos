@@ -5,18 +5,21 @@ import lombok.Getter;
 @Getter
 public enum ExceptionsConstants {
 
-    ITEM_NOT_FOUND("Item not found"),
-    USER_NOT_FOUND( "User not found"),
-    USERS_NOT_FOUND("Users not found"),
-    USER_ALREADY_EXISTS("User already exists"),
-    ITEM_IS_NULL("Item is null"),
-    USER_IS_NULL("User is null"),
-    ADDRESS_IS_NULL("Address is null"),
-    ADDRESS_NOT_FOUND("Address not found"),
-    CREDENTIAL_INVALID("Invalid username or password"),
+    ITEM_VACIO("Item vacio"),
+    USER_VACIO( "User vacio"),
+    USERS_VACIOS("Users vacios"),
+    USER_EXISTE("User exists"),
+    ITEM_NULL("Item  null"),
+    USER_NULL("User  null"),
+    ADDRESS_NULO("Address is nulo"),
+
     CATEGORY_NOT_FOUND("Category not found"),
-    CATEGORY_IS_NULL("Category is null"),
-    DOCUMENT_ALREADY_EXISTS("Document already exists");
+
+    CREDENTIAL_NOVALID("Invalid username or password"),
+
+    CATEGORY_IS_NULO("Category is null"),
+    DOCUMENT_EXISTS("Document already exists"),
+    ADDRESS_NOT_FOUND("Address not found");
     private final String message;
 
     private ExceptionsConstants(String message){

@@ -30,7 +30,7 @@ public class AuthService {
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         UserDetails user = authRepository.findByEmail(request.getEmail()).
-                orElseThrow(() -> new NotFoundException(ExceptionsConstants.CREDENTIAL_INVALID.getMessage()));
+                orElseThrow(() -> new NotFoundException(ExceptionsConstants.CREDENTIAL_NOVALID.getMessage()));
         String token = jwtService.getToken(user);
         return AuthResponse.builder().token(token).build();
     }
@@ -38,7 +38,7 @@ public class AuthService {
     public AuthResponse register(RegisterRequest request) {
         Optional<UserModel> existingUserByEmail = authRepository.findByEmail(request.getEmail());
         if (existingUserByEmail.isPresent()) {
-            throw new AlreadyExistsException(ExceptionsConstants.USER_ALREADY_EXISTS.getMessage());
+            throw new AlreadyExistsException(ExceptionsConstants.USER_EXISTE.getMessage());
         }
     
         UserModel userModel = UserModel.builder()

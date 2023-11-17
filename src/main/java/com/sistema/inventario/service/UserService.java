@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.Role;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,12 +26,12 @@ public class UserService {
     public UserModel createUser(UserModel userModelReq){
         Optional<UserModel> existingUserByEmail = userRepository.findByEmail(userModelReq.getEmail());
         if (existingUserByEmail.isPresent()) {
-            throw new AlreadyExistsException(ExceptionsConstants.USER_ALREADY_EXISTS.getMessage());
+            throw new AlreadyExistsException(ExceptionsConstants.USER_EXISTE.getMessage());
         }
     
         Optional<UserModel> existingUserByDocument = userRepository.findByDocument(userModelReq.getDocument());
         if (existingUserByDocument.isPresent()) {
-            throw new AlreadyExistsException(ExceptionsConstants.DOCUMENT_ALREADY_EXISTS.getMessage());
+            throw new AlreadyExistsException(ExceptionsConstants.DOCUMENT_EXISTS.getMessage());
         }
     
         userModelReq.setPassword(passwordEncoder.encode(userModelReq.getPassword()));
@@ -41,15 +40,15 @@ public class UserService {
     }
     public UserModel getUserById(Long id){
         if(id == null)
-            throw new RuntimeException(ExceptionsConstants.USER_NOT_FOUND.getMessage());
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(ExceptionsConstants.USER_NOT_FOUND.getMessage()));
+            throw new RuntimeException(ExceptionsConstants.USER_VACIO.getMessage());
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(ExceptionsConstants.USER_VACIO.getMessage()));
     }
 
   public List<UserModel> findAllUsers(){
         List<UserModel> users = StreamSupport.stream(userRepository.findAll().spliterator(), false)
                                          .collect(Collectors.toList());
         if(users.isEmpty()){
-            throw new NotFoundException(ExceptionsConstants.USERS_NOT_FOUND.getMessage());
+            throw new NotFoundException(ExceptionsConstants.USERS_VACIOS.getMessage());
         }
     return users;   
     }
@@ -57,12 +56,12 @@ public class UserService {
     public UserModel updateUser(Long id, UserModel userModelReq){
         Optional<UserModel> existingUser = userRepository.findByEmail(userModelReq.getEmail());
         if (existingUser.isPresent() && !existingUser.get().getId().equals(id)) {
-            throw new AlreadyExistsException(ExceptionsConstants.USER_ALREADY_EXISTS.getMessage());
+            throw new AlreadyExistsException(ExceptionsConstants.USER_EXISTE.getMessage());
         }
     
         Optional<UserModel> userToUpdateOpt = userRepository.findById(id);
         if (!userToUpdateOpt.isPresent()) {
-            throw new NotFoundException(ExceptionsConstants.USER_NOT_FOUND.getMessage());
+            throw new NotFoundException(ExceptionsConstants.USER_VACIO.getMessage());
         }
     
         UserModel userToUpdate = userToUpdateOpt.get();
