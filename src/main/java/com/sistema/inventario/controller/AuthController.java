@@ -1,8 +1,8 @@
 package com.sistema.inventario.controller;
 
-import com.sistema.inventario.auth.AuthResponse;
-import com.sistema.inventario.auth.LoginRequest;
-import com.sistema.inventario.auth.RegisterRequest;
+import com.sistema.inventario.jwtAuth.AuthResponse;
+import com.sistema.inventario.jwtAuth.LoginRequest;
+import com.sistema.inventario.jwtAuth.RegisterRequest;
 import com.sistema.inventario.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-@RestController
 @RequestMapping("/auth")
+@RestController
+
 @RequiredArgsConstructor
 public class AuthController {
 

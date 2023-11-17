@@ -1,4 +1,4 @@
-package com.sistema.inventario.Config;
+package com.sistema.inventario.setting;
 
 import com.sistema.inventario.exception.NotFoundException;
 import com.sistema.inventario.repository.AuthRepository;
@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
-public class ApplicationConfig {
+public class AppSetting {
 
     private final AuthRepository authRepository;
 

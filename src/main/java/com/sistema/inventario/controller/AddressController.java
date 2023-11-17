@@ -37,10 +37,12 @@ public class AddressController {
 
     @GetMapping("address")
     public ResponseEntity<List<AddressModel>> getAll(){
+
         return ResponseEntity.ok(addressService.getAllAddress());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {

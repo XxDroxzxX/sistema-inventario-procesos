@@ -20,13 +20,7 @@ public class CustomExceptionHandler {
         response.put("Message: ", ex.getMessage());
         return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
     }
-    @ExceptionHandler(AlreadyExistsException.class)
-    public ResponseEntity<Object> handleAlreadyExistsException(AlreadyExistsException ex) {
-        Map<String, String> response = new HashMap<>();
-        response.put("Date: ", LocalDate.now().toString());
-        response.put("Message: ", ex.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-    }
+   //si el item escrito no es valido manda el exception
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -35,6 +29,14 @@ public class CustomExceptionHandler {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);}
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<Object> handleAlreadyExistsException(AlreadyExistsException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("Date: ", LocalDate.now().toString());
+        response.put("Message: ", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
-}
+
+    }
+

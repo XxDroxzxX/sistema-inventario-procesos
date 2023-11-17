@@ -1,8 +1,8 @@
 package com.sistema.inventario.service;
 
-import com.sistema.inventario.auth.AuthResponse;
-import com.sistema.inventario.auth.LoginRequest;
-import com.sistema.inventario.auth.RegisterRequest;
+import com.sistema.inventario.jwtAuth.AuthResponse;
+import com.sistema.inventario.jwtAuth.LoginRequest;
+import com.sistema.inventario.jwtAuth.RegisterRequest;
 import com.sistema.inventario.exception.AlreadyExistsException;
 import com.sistema.inventario.exception.NotFoundException;
 import com.sistema.inventario.model.UserModel;

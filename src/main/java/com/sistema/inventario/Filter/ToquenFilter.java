@@ -1,4 +1,4 @@
-package com.sistema.inventario.jwt;
+package com.sistema.inventario.Filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

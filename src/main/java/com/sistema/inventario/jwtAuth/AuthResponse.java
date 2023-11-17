@@ -1,4 +1,4 @@
-package com.sistema.inventario.auth;
+package com.sistema.inventario.jwtAuth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
-    private String email;
-    private String password;
+public class AuthResponse { 
+    private String token;
 }
