@@ -15,7 +15,7 @@ import java.util.Map;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "7f08153513d489a979265575aa0dfd5bed7bd9588981bb60f4a5e19d0261447b";
+    private static final String SECRET_KEY = "14f1153513d489a979265575aa0dfd5bed7bd9588981bb60f4a5e19d0261957d";
 
     public String getToken(UserDetails user){
         return getToken(new HashMap<>(), user);
@@ -25,7 +25,7 @@ public class JwtService {
         return Jwts.builder().
                 setClaims(extraClaims).
                 setSubject(user.getUsername()).
-                setIssuedAt(new Date(System.currentTimeMillis())). //Fecha de creacion
+                setIssuedAt(new Date(System.currentTimeMillis())).
                 setExpiration(new Date(System.currentTimeMillis() + 1000 *60*24)).
                 signWith(getKey(), SignatureAlgorithm.HS256).
                 compact();
