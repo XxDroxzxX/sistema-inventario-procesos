@@ -1,11 +1,14 @@
 package com.sistema.inventario.jwtFiler;
 
+import com.sistema.inventario.service.JwtService;
 import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -14,18 +17,18 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class  ToquenFilter extends OncePerRequestFilter {
 
  @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, java.io.IOException {
+ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+         throws ServletException, IOException, java.io.IOException {
+     String bearerToken = request.getHeader("Authorization");
 
-        final String token = getTokenFromRequest(request);
+     if (bearerToken != null && bearerToken.startsWith("Bearer ")){
+         String token = bearerToken.replace("Bearer ", "");
+         UsernamePasswordAuthenticationToken usernamePAT = JwtService.getAuthentication(token);
+         SecurityContextHolder.getContext().setAuthentication(usernamePAT);
+     }
+     filterChain.doFilter(request, response);
+ }
 
-        if (token == null){
-
-            filterChain.doFilter(request,response);
-            return;
-        }
-
-        filterChain.doFilter(request,response);
-    }
 
     private String getTokenFromRequest(HttpServletRequest request) {
         final String authHeader  = request.getHeader(HttpHeaders.AUTHORIZATION);

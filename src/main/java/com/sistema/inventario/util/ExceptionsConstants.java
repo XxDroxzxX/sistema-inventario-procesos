@@ -22,8 +22,8 @@ public enum ExceptionsConstants {
     DOCUMENT_ALREADY_EXISTS("Document already exists");
     private final String message;
 
-    private ExceptionsConstants(String message){
-        this.message =  message;
+    ExceptionsConstants(String s) {
+        this.message = s;
     }
 
 }

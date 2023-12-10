@@ -2,9 +2,11 @@ package com.sistema.inventario.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -43,6 +45,21 @@ public class    CustomExceptionHandler {
         response.put("Date: ", LocalDate.now().toString());
         response.put("Message: ", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(AuthenticationFailedException.class)
+    public ResponseEntity<?> handleAuthenticationFailedException(AuthenticationFailedException ex) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDate.now().toString());
+        body.put("message", ex.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(BindException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(BindException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+        return ResponseEntity.badRequest().body(errors);
     }
 
 }
