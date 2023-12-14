@@ -1,4 +1,4 @@
-package com.sistema.inventario.jwtAuth;
+package com.sistema.inventario.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

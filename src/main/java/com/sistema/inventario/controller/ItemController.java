@@ -35,12 +35,11 @@ public class ItemController {
     @DeleteMapping("items/{id}")
     public ResponseEntity <String> deleteItemById(@PathVariable Long id){
         itemService.deleteItemById(id);
-        return new ResponseEntity<>("Se ha eliminado el usuario",HttpStatus.NO_CONTENT) ;
+        return new ResponseEntity<>("Se elimino el usuario",HttpStatus.NO_CONTENT) ;
     }
 
     @GetMapping("items")
     public ResponseEntity <List<ItemModel>> getAll(){
-
         return ResponseEntity.ok(itemService.findAllItems());
     }
 

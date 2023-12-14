@@ -3,6 +3,7 @@ package com.sistema.inventario.service;
 import com.sistema.inventario.exception.AlreadyExistsException;
 import com.sistema.inventario.exception.NotFoundException;
 import com.sistema.inventario.model.ItemModel;
+import com.sistema.inventario.repository.CategoryRepository;
 import com.sistema.inventario.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
     public ItemModel createItem (ItemModel item){
         if (itemRepository.findByName(item.getName()).isPresent()) {
             throw new AlreadyExistsException("Item with name " + item.getName() + " already exists");
@@ -39,14 +42,15 @@ public class ItemService {
         if (existingItemOptional.isPresent() && !existingItemOptional.get().getId().equals(id)) {
             throw new AlreadyExistsException("Item with name " + item.getName() + " already exists");
         }
-        ItemModel itemDB = itemRepository.findById(id).get();
-        itemDB.setName(item.getName());
-        itemDB.setDescription(item.getDescription());
-        itemDB.setQuantity(item.getQuantity());
-        itemDB.setPrice(item.getPrice());
-        itemDB.setProvider(item.getProvider());
-        itemDB.setStatus(item.getStatus());
-        return itemRepository.save(itemDB);
+        ItemModel updateItem = itemRepository.findById(id).get();
+        updateItem.setName(item.getName());
+        updateItem.setDescription(item.getDescription());
+        updateItem.setQuantity(item.getQuantity());
+        updateItem.setPrice(item.getPrice());
+        updateItem.setProvider(item.getProvider());
+        updateItem.setStatus(item.getStatus());
+
+        return itemRepository.save(updateItem);
     }
     public Boolean deleteItemById(Long id){
         if(itemRepository.existsById(id)){
