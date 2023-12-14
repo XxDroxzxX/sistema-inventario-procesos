@@ -14,7 +14,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
-public class  ToquenFilter extends OncePerRequestFilter {
+public class jwtAuthentificationFilter extends OncePerRequestFilter {
 
  @Override
  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

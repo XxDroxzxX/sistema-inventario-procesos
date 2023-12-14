@@ -1,12 +1,11 @@
 package com.sistema.inventario.util;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 
 
-public enum ExceptionsConstants {
+public enum Constants {
 
     ITEM_NOT_FOUND("Item not found"),
     USER_NOT_FOUND( "User not found"),
@@ -21,10 +20,8 @@ public enum ExceptionsConstants {
     CATEGORY_IS_NULL("Category is null"),
     DOCUMENT_ALREADY_EXISTS("Document already exists");
     private final String message;
-
-    ExceptionsConstants(String s) {
+    Constants(String s){
         this.message = s;
     }
 
 }
-
