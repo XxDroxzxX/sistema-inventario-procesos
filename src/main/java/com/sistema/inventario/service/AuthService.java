@@ -6,10 +6,9 @@ import com.sistema.inventario.controller.RegisterRequest;
 import com.sistema.inventario.exceptions.AlreadyExistsException;
 import com.sistema.inventario.exceptions.NotFoundException;
 import com.sistema.inventario.repository.AuthRepository;
-import com.sistema.inventario.util.ExceptionsConstants;
+import com.sistema.inventario.util.Constants;
 import com.sistema.inventario.util.Rol;
 import com.sistema.inventario.model.UserModel;
-import com.sistema.inventario.repository.UserRepository;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,7 +34,7 @@ public class AuthService {
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         UserDetails user = authRepository.findByEmail(request.getEmail()).
-                orElseThrow(() -> new NotFoundException(ExceptionsConstants.CREDENTIAL_INVALID.getMessage()));
+                orElseThrow(() -> new NotFoundException(Constants.CREDENTIAL_INVALID.getMessage()));
         String token = jwtService.getToken((UserModel) user);
         return AuthResponse.builder().tokens(token).build();
     }
@@ -43,12 +42,12 @@ public class AuthService {
     public AuthResponse register(RegisterRequest request) {
         Optional<UserModel> existingUserByEmail = authRepository.findByEmail(request.getEmail());
         if (existingUserByEmail.isPresent()) {
-            throw new AlreadyExistsException(ExceptionsConstants.USER_ALREADY_EXISTS.getMessage());
+            throw new AlreadyExistsException(Constants.USER_ALREADY_EXISTS.getMessage());
         }
 
         Optional<UserModel> existingUserByDocument = authRepository.findByDocument(request.getDocument());
         if (existingUserByDocument.isPresent()) {
-            throw new AlreadyExistsException(ExceptionsConstants.DOCUMENT_ALREADY_EXISTS.getMessage());
+            throw new AlreadyExistsException(Constants.DOCUMENT_ALREADY_EXISTS.getMessage());
         }
 
         UserModel userModel = UserModel.builder()

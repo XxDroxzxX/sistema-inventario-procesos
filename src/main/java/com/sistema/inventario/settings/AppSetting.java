@@ -2,8 +2,7 @@ package com.sistema.inventario.settings;
 
 import com.sistema.inventario.exceptions.NotFoundException;
 import com.sistema.inventario.repository.AuthRepository;
-import com.sistema.inventario.repository.UserRepository;
-import com.sistema.inventario.util.ExceptionsConstants;
+import com.sistema.inventario.util.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,9 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -39,7 +36,7 @@ private final AuthRepository authRepository;
     @Bean
     public UserDetailsService userDetailService() {
         return email -> authRepository.findByEmail(email).orElseThrow(() ->
-                new NotFoundException(ExceptionsConstants.CREDENTIAL_INVALID.getMessage()));
+                new NotFoundException(Constants.CREDENTIAL_INVALID.getMessage()));
     }
 
     @Bean
